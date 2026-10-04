@@ -1,6 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 
+const base = import.meta.env.BASE_URL;
+
 const docs = [
   ['Getting Started', 'Shortest path from installation to your first local analysis.', 'https://github.com/sonii-shivansh/Vericore/blob/main/docs/GETTING_STARTED.md'],
   ['Architecture', 'System model, package boundaries, evidence flow, and deterministic layers.', 'https://github.com/sonii-shivansh/Vericore/blob/main/docs/ARCHITECTURE.md'],
@@ -13,14 +15,14 @@ const docs = [
   ['Development', 'Project structure, tests, CI, contributor workflow, and implementation guidance.', 'https://github.com/sonii-shivansh/Vericore/blob/main/docs/DEVELOPMENT.md'],
   ['Implementation Status', 'Implemented capabilities, current limitations, and explicit future direction.', 'https://github.com/sonii-shivansh/Vericore/blob/main/docs/ENTERPRISE_ROADMAP.md'],
   ['Security', 'Security policy and vulnerability reporting guidance.', 'https://github.com/sonii-shivansh/Vericore/blob/main/SECURITY.md']
-];
+] as const;
 
 const paths = [
-  ['01', 'New to Vericore', 'Understand the product before going deep.', 'Getting Started → Architecture → Demo', '/demo'],
-  ['02', 'Ready to build', 'Go from installation to a real local workflow.', 'Getting Started → How to Use → Change Safety', '/how-to-use'],
-  ['03', 'Integrating agents', 'Understand the boundary between AI reasoning and verified change.', 'Engineering Reality → MCP → Change Safety', '/architecture'],
-  ['04', 'Reviewing trust', 'Inspect data flow, API boundaries, and security constraints.', 'Data & Privacy → API → Security', '/security']
-];
+  ['01', 'New to Vericore', 'Understand the product before going deep.', 'Getting Started → Architecture → Demo', 'demo/'],
+  ['02', 'Ready to build', 'Go from installation to a real local workflow.', 'Getting Started → How to Use → Change Safety', 'how-to-use/'],
+  ['03', 'Integrating agents', 'Understand the boundary between AI reasoning and verified change.', 'Engineering Reality → MCP → Change Safety', 'architecture/'],
+  ['04', 'Reviewing trust', 'Inspect data flow, API boundaries, and security constraints.', 'Data & Privacy → API → Security', 'security/']
+] as const;
 ---
 
 <BaseLayout title="Documentation — Vericore" description="Authoritative Vericore 0.7.0 documentation and engineering references.">
@@ -28,27 +30,62 @@ const paths = [
     <span class="kicker">DOCUMENTATION</span>
     <h1>Start with a path.<br /><span>Go deeper when you're ready.</span></h1>
     <p>The website gives you the product model. The Vericore repository remains authoritative for implementation details, contracts, schemas, limitations, and current behavior.</p>
-    <div class="hero-actions"><a class="primary" href="/how-to-use">Start using Vericore →</a><a class="secondary" href="/demo">See the proof first</a></div>
+    <div class="hero-actions">
+      <a class="primary" href={`${base}how-to-use/`}>Start using Vericore →</a>
+      <a class="secondary" href={`${base}demo/`}>See the proof first</a>
+    </div>
   </section>
 
   <section class="container onboarding">
-    <div class="section-head"><span class="kicker">CHOOSE YOUR PATH</span><h2>What are you trying to do?</h2></div>
+    <div class="section-head">
+      <span class="kicker">CHOOSE YOUR PATH</span>
+      <h2>What are you trying to do?</h2>
+    </div>
     <div class="paths">
-      {paths.map(([number, title, description, trail, href]) => <a class="path" href={href}>
-        <span class="number">{number}</span><div><strong>{title}</strong><p>{description}</p><small>{trail}</small></div><span class="arrow">↗</span>
-      </a>)}
+      {paths.map(([number, title, description, trail, href]) => (
+        <a class="path" href={`${base}${href}`}>
+          <span class="number">{number}</span>
+          <div>
+            <strong>{title}</strong>
+            <p>{description}</p>
+            <small>{trail}</small>
+          </div>
+          <span class="arrow">↗</span>
+        </a>
+      ))}
     </div>
   </section>
 
   <section class="container references">
-    <div class="section-head"><span class="kicker">REFERENCE LIBRARY</span><h2>Explore the system.</h2><p>Go directly to the source material when you need implementation-level detail.</p></div>
-    <div class="grid">{docs.map(([title, description, href]) => <a class="card" href={href}><span class="kicker">REFERENCE</span><h2>{title} ↗</h2><p>{description}</p></a>)}</div>
+    <div class="section-head">
+      <span class="kicker">REFERENCE LIBRARY</span>
+      <h2>Explore the system.</h2>
+      <p>Go directly to the source material when you need implementation-level detail.</p>
+    </div>
+    <div class="grid">
+      {docs.map(([title, description, href]) => (
+        <a class="card" href={href} target="_blank" rel="noreferrer noopener">
+          <span class="kicker">REFERENCE</span>
+          <h2>{title} ↗</h2>
+          <p>{description}</p>
+        </a>
+      ))}
+    </div>
   </section>
 
-  <section class="container note"><span class="kicker">CURRENT RELEASE</span><h2>Vericore v0.7.0</h2><p>For installation, platform artifacts, checksums, and release notes, use the GitHub release as the authoritative distribution source.</p><a href="https://github.com/sonii-shivansh/Vericore/releases/tag/v0.7.0">View v0.7.0 ↗</a></section>
+  <section class="container note">
+    <span class="kicker">CURRENT RELEASE</span>
+    <h2>Vericore v0.7.0</h2>
+    <p>For installation, platform artifacts, checksums, and release notes, use the GitHub release archive and the authoritative implementation docs in the main Vericore repository.</p>
+  </section>
 </BaseLayout>
 
 <style>
-  .hero{padding:110px 0 70px;max-width:960px}.kicker{color:var(--accent);font:600 .72rem/1.2 ui-monospace,monospace;letter-spacing:.12em}.hero h1{margin:18px 0;font-size:clamp(3rem,8vw,6rem);line-height:.96;letter-spacing:-.065em}.hero h1 span{color:var(--muted)}.hero p{max-width:720px;color:var(--muted);font-size:1.05rem}.hero-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}.hero-actions a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 17px;border-radius:9px;text-decoration:none}.primary{background:var(--accent);color:#071018;font-weight:700}.secondary{border:1px solid var(--line);color:var(--text);background:var(--panel)}.section-head{margin-bottom:18px}.section-head h2{margin:8px 0;font-size:2rem;letter-spacing:-.03em}.section-head p{margin:0;color:var(--muted)}.onboarding{margin-top:20px}.paths{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.path{display:grid;grid-template-columns:auto 1fr auto;gap:15px;align-items:start;padding:22px;border:1px solid var(--line);border-radius:12px;background:var(--panel);text-decoration:none;color:var(--text);transition:transform .16s ease,border-color .16s ease,background .16s ease}.path:hover{transform:translateY(-2px);border-color:#304155;background:var(--panel-2)}.path:focus-visible,.card:focus-visible,.hero-actions a:focus-visible,.note a:focus-visible{outline:2px solid var(--accent);outline-offset:3px}.number{font:600 .72rem/1 ui-monospace,monospace;color:var(--accent);padding-top:4px}.path strong{font-size:1rem}.path p{margin:5px 0 10px;color:var(--muted);font-size:.9rem}.path small{color:var(--muted);font:500 .72rem/1.4 ui-monospace,monospace}.arrow{color:var(--accent)}.references{margin-top:72px}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.card{padding:26px;border:1px solid var(--line);border-radius:12px;background:var(--panel);text-decoration:none;color:var(--text);transition:transform .16s ease,border-color .16s ease}.card:hover{transform:translateY(-2px);border-color:#304155}.card h2{margin:14px 0 7px;font-size:1.2rem}.card p{margin:0;color:var(--muted)}.note{margin-top:72px;padding:30px;border:1px solid var(--line);border-radius:12px;background:var(--panel)}.note h2{margin:10px 0;font-size:2rem}.note p{color:var(--muted)}.note a{color:var(--accent);text-underline-offset:4px}@media(max-width:700px){.paths,.grid{grid-template-columns:1fr}.hero{padding-top:80px}.hero-actions a{width:100%}.references,.note{margin-top:48px}.path{padding:18px}}
-@media(prefers-reduced-motion:reduce){.path,.card{transition:none}.path:hover,.card:hover{transform:none}}
+  .hero{padding:110px 0 70px;max-width:960px}.kicker{color:var(--accent);font:600 .72rem/1.2 ui-monospace,monospace;letter-spacing:.12em}.hero h1{margin:18px 0;font-size:clamp(3rem,8vw,6rem);line-height:.95;letter-spacing:-.06em}.hero h1 span{color:#d9e4ee}.hero p{max-width:56ch;color:var(--muted);font-size:1.08rem;line-height:1.7}.hero-actions{display:flex;flex-wrap:wrap;gap:14px;margin-top:28px}.hero-actions a{display:inline-flex;align-items:center;justify-content:center;padding:12px 18px;border-radius:10px;text-decoration:none;font-weight:700;border:1px solid var(--line);transition:transform .2s ease, border-color .2s ease}.hero-actions a.primary{background:var(--accent);color:#071018;border-color:transparent}.hero-actions a.secondary{background:transparent;color:var(--text)}.hero-actions a:hover{transform:translateY(-1px)}
+  .section-head{display:grid;gap:10px;margin-bottom:18px}.section-head h2{margin:0;font-size:clamp(1.7rem,4vw,2.7rem)}.section-head p{margin:0;color:var(--muted)}
+  .paths,.grid{display:grid;gap:16px}.paths{margin-top:12px}.path{display:grid;grid-template-columns:auto 1fr auto;align-items:start;gap:16px;padding:18px 20px;border:1px solid var(--line);border-radius:14px;background:rgba(17,24,35,.75);color:var(--text);text-decoration:none;transition:border-color .2s ease, transform .2s ease}.path:hover{border-color:rgba(115,213,255,.6);transform:translateY(-1px)}.number{display:grid;place-items:center;width:42px;height:42px;border:1px solid var(--line);border-radius:10px;color:var(--accent);font:700 .8rem/1 ui-monospace,monospace;background:rgba(115,213,255,.06)}.path strong{display:block;font-size:1.1rem;margin-bottom:4px}.path p{margin:0;color:var(--muted);line-height:1.6}.path small{display:block;margin-top:8px;color:#c8d2e0}.arrow{font-size:1.4rem;color:var(--accent)}
+  .references{padding-top:44px}.grid{grid-template-columns:repeat(auto-fit,minmax(230px,1fr));margin-top:18px}.card{display:block;padding:18px 18px 20px;border:1px solid var(--line);border-radius:14px;background:rgba(17,24,35,.7);color:var(--text);text-decoration:none;transition:border-color .2s ease, transform .2s ease}.card:hover{border-color:rgba(115,213,255,.6);transform:translateY(-1px)}.card h2{margin:10px 0 8px;font-size:1.15rem;line-height:1.3}.card p{margin:0;color:var(--muted);line-height:1.7}.card .kicker{display:inline-block;margin-top:2px}
+  .note{margin-top:52px;padding:22px 24px;border:1px solid var(--line);border-radius:14px;background:linear-gradient(180deg, rgba(17,24,35,.8), rgba(12,17,25,.9))}.note h2{margin:12px 0 8px}.note p{margin:0;color:var(--muted);line-height:1.7}
+  @media(max-width:700px){.hero{padding-top:84px}.hero h1{font-size:clamp(2.6rem,12vw,4rem)}.path{grid-template-columns:auto 1fr;}.path .arrow{display:none}.hero-actions{flex-direction:column;align-items:stretch}.hero-actions a{width:100%}}
+  @media(prefers-reduced-motion:reduce){.hero-actions a,.path,.card{transition:none}.hero-actions a:hover,.path:hover,.card:hover{transform:none}}
 </style>
