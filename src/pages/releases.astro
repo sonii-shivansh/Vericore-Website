@@ -1,20 +1,62 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 
+const base = import.meta.env.BASE_URL;
+
 const releases = [
-  ['v0.7.0', 'Vericore identity + engineering safety', 'Current stable release. First canonical Vericore release line with Engineering Reality, grounded repository Q&A, deterministic planning, Agent Change Contracts, prepare → change → verify, architecture governance, MCP, local REST, provenance, and cross-platform verification.', true],
-  ['v0.6.0', 'Engineering Intelligence + Launch Hardening', 'Previous published milestone under the former project identity, covering deterministic repository intelligence, grounded workflows, local REST capabilities, security hardening, self-contained reports, and cross-platform verification.', false],
+  ['v0.7.0', 'Vericore identity + engineering safety', 'Current stable release. First canonical Vericore release line with Engineering Reality, grounded repository Q&A, deterministic planning, Agent Change Contracts, and repository-bound verification.', true],
+  ['v0.6.0', 'Engineering Intelligence + Launch Hardening', 'Previous published milestone under the former project identity, covering deterministic repository intelligence, grounded workflows, local-first execution, and engineering intelligence improvements.', false],
   ['v0.5.0', 'Engineering Intelligence Foundation', 'Previous published milestone under the former project identity, covering repository, change, PR, architecture, evidence, Q&A, and planning foundations.', false]
-];
+] as const;
+
+const releaseLinks = {
+  'v0.7.0': 'https://github.com/sonii-shivansh/Vericore/releases/tag/v0.7.0',
+  'v0.6.0': 'https://github.com/sonii-shivansh/Vericore/releases/tag/v0.6.0',
+  'v0.5.0': 'https://github.com/sonii-shivansh/Vericore/releases/tag/v0.5.0'
+} as const;
 ---
 
 <BaseLayout title="Releases — Vericore" description="Vericore 0.7.0 release history, platform support, and distribution links.">
-  <section class="hero container"><span class="kicker">RELEASES</span><h1>Shipped,<br /><span>versioned, inspectable.</span></h1><p>GitHub is the authoritative source for release assets, checksums, source archives, and detailed release notes.</p></section>
-  <section class="container current"><div><span class="kicker">CURRENT STABLE</span><h2>v0.7.0</h2><p>Canonical Vericore identity with deterministic engineering context, change safety, architecture governance, AI-agent integration boundaries, and cross-platform release verification.</p></div><a class="button" href="https://github.com/sonii-shivansh/Vericore/releases/tag/v0.7.0">Download on GitHub ↗</a><div class="platforms"><span>Linux x64</span><span>Windows x64</span><span>macOS x64</span><span>macOS ARM64</span><span>SHA256SUMS</span></div></section>
-  <section class="container releases">{releases.map(([version, title, description, current]) => (<article class:list={{ release: true, currentRelease: current }}><div><span class="version">{version}</span><h2>{title}</h2><p>{description}</p></div><a href={`https://github.com/sonii-shivansh/Vericore/releases/tag/${version}`}>View release ↗</a></article>))}</section>
-  <section class="container note"><span class="kicker">RELEASE RULE</span><h2>The website follows the shipped implementation.</h2><p>Product claims on this site should describe implemented behavior. Future work belongs in the repository roadmap until code, tests, and release verification establish it.</p><a href="https://github.com/sonii-shivansh/Vericore/blob/main/docs/ENTERPRISE_ROADMAP.md">Inspect implementation status ↗</a></section>
+  <section class="hero container">
+    <span class="kicker">RELEASES</span>
+    <h1>Shipped,<br /><span>versioned, inspectable.</span></h1>
+    <p>GitHub is the authoritative source for release assets, checksums, and packaged artifacts. This site follows the shipped implementation rather than inventing roadmap or future-state claims.</p>
+  </section>
+
+  <section class="container current">
+    <div>
+      <span class="kicker">CURRENT STABLE</span>
+      <h2>v0.7.0</h2>
+      <p>Canonical Vericore identity with deterministic engineering context, change safety, architecture governance, repository-grounded planning, and post-change verification.</p>
+      <div class="actions">
+        <a class="button primary" href={releaseLinks['v0.7.0']} target="_blank" rel="noreferrer noopener">View release ↗</a>
+        <a class="button secondary" href={`${base}docs/`}>Browse docs</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="container releases">
+    {releases.map(([version, title, description, current]) => (
+      <article class:list={{ release: true, currentRelease: current }}>
+        <div>
+          <span class="version">{version}</span>
+          <h3>{title}</h3>
+          <p>{description}</p>
+        </div>
+        <a href={releaseLinks[version as keyof typeof releaseLinks]} target="_blank" rel="noreferrer noopener">Open release ↗</a>
+      </article>
+    ))}
+  </section>
+
+  <section class="container note">
+    <span class="kicker">RELEASE RULE</span>
+    <h2>The website follows the shipped implementation.</h2>
+    <p>Product claims on this site must describe implemented behavior in the current Vericore repository and public release artifacts, not future roadmap ideas or hypothetical features.</p>
+  </section>
 </BaseLayout>
 
 <style>
-.hero{padding:110px 0 65px;max-width:900px}.kicker{color:var(--accent);font:600 .72rem/1.2 ui-monospace,monospace;letter-spacing:.12em}.hero h1{margin:18px 0;font-size:clamp(3rem,8vw,6rem);line-height:.96;letter-spacing:-.065em}.hero h1 span{color:var(--muted)}.hero p{max-width:700px;color:var(--muted)}.current{display:grid;grid-template-columns:1fr auto;gap:10px;padding:26px;border:1px solid var(--line);border-radius:12px;background:var(--panel)}.current h2{margin:8px 0 4px;font-size:2rem}.current p{margin:0;color:var(--muted)}.button{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 18px;border-radius:8px;background:var(--text);color:var(--bg);text-decoration:none;font-weight:650}.platforms{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}.platforms span{padding:7px 10px;border:1px solid var(--line);border-radius:999px;color:var(--muted);font:.68rem ui-monospace,monospace}.releases{margin-top:14px;display:grid;gap:10px}.release{padding:28px;border:1px solid var(--line);border-radius:12px;background:var(--panel);display:flex;justify-content:space-between;align-items:center;gap:25px}.currentRelease{border-color:#365f52}.version{color:var(--accent);font:.75rem ui-monospace,monospace}.release h2{margin:10px 0 5px;font-size:1.3rem}.release p{margin:0;color:var(--muted)}.release a{white-space:nowrap;text-decoration:none}.release a:hover{color:var(--accent)}.note{margin-top:70px;padding:30px;border:1px solid var(--line);border-radius:12px;background:var(--panel)}.note h2{margin:10px 0;font-size:2rem}.note p{color:var(--muted)}.note a{color:var(--accent);text-underline-offset:4px}@media(max-width:700px){.current{grid-template-columns:1fr}.platforms{margin-top:4px}.release{flex-direction:column;align-items:flex-start}}
+.hero{padding:110px 0 65px;max-width:900px}.kicker{color:var(--accent);font:600 .72rem/1.2 ui-monospace,monospace;letter-spacing:.12em}.hero h1{margin:18px 0;font-size:clamp(3rem,8vw,6rem);line-height:.95;letter-spacing:-.06em}.hero h1 span{color:#dfeaf5}.hero p{max-width:62ch;color:var(--muted);line-height:1.7}.current,.releases,.note{margin-top:28px}.current{padding:28px 24px;border:1px solid var(--line);border-radius:14px;background:linear-gradient(180deg, rgba(17,24,35,.9), rgba(12,17,25,.88))}.current h2{margin:12px 0 10px;font-size:clamp(2.2rem,5vw,3rem);letter-spacing:-.04em}.current p{margin:0;color:var(--muted);line-height:1.7}.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px}.button{display:inline-flex;align-items:center;justify-content:center;padding:12px 18px;border-radius:10px;border:1px solid var(--line);font-weight:700;text-decoration:none;transition:transform .2s ease}.button:hover{transform:translateY(-1px)}.button.primary{background:var(--accent);color:#071018;border-color:transparent}.button.secondary{background:transparent;color:var(--text)}
+.releases{display:grid;gap:16px}.release{display:grid;grid-template-columns:1fr auto;align-items:center;gap:20px;padding:18px 20px;border:1px solid var(--line);border-radius:12px;background:rgba(17,24,35,.78)}.release.currentRelease{border-color:rgba(115,213,255,.65);box-shadow:inset 0 0 0 1px rgba(115,213,255,.15)}.version{display:inline-block;color:var(--accent);font:700 .72rem/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.14em;margin-bottom:8px}.release h3{margin:0 0 8px;font-size:1.3rem}.release p{margin:0;color:var(--muted);line-height:1.6}.release a{color:var(--text);text-decoration:none;font-weight:700}.note{padding:22px 24px;border:1px solid var(--line);border-radius:14px;background:rgba(17,24,35,.78)}.note h2{margin:12px 0 8px}.note p{margin:0;color:var(--muted);line-height:1.7}
+@media(max-width:700px){.hero{padding-top:84px}.release{grid-template-columns:1fr}.actions{flex-direction:column;align-items:stretch}.button{width:100%}}
 </style>
