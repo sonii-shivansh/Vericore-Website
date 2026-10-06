@@ -46,6 +46,8 @@ export const demoData = {
   safety: {
     prepared: 'add payment validation',
     contract: 'agent-change-contract.json',
+    plannedPaths: ['PaymentService.kt', 'PaymentValidator.kt'],
+    detectedUnexpected: 'PaymentDatabase.kt',
     fingerprint: 'SHA-256 / repository-bound',
     verify: ['prepared HEAD', 'planned paths', 'evidence IDs', 'verification commands', 'repository state']
   },
