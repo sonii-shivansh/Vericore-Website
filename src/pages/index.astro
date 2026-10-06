@@ -19,31 +19,34 @@ const capabilities = [
 ];
 ---
 
-<BaseLayout title="Vericore — Evidence-grounded engineering intelligence" description="Vericore 0.7.0 provides deterministic engineering intelligence for Java and Kotlin repositories, grounded in repository evidence, Git history, architecture, and change safety.">
+<BaseLayout title="Vericore — AI agent verification" description="Vericore is the verification layer for AI coding agents: deterministic repository evidence, pre-change contracts, and post-change verification for Java and Kotlin repositories.">
   <section class="hero container">
-    <div class="eyebrow"><span class="pulse"></span> v0.7.0 · stable · open source · local-first</div>
-    <h1>Understand.<br /><span>Change. Verify.</span></h1>
-    <p class="hero-copy">Vericore turns repository structure, Git history, architecture, and code changes into reproducible engineering intelligence. Evidence is gathered, reasoned over, and verified before a change is treated as safe.</p>
+    <div class="eyebrow"><span class="pulse"></span> v0.8.2 · open source · local-first · AI-agent verification</div>
+    <h1>AI changes code.<br /><span>Vericore verifies it.</span></h1>
+    <p class="hero-copy">Vericore creates a repository-bound change contract before an AI coding agent edits code, then verifies the actual repository state against that original boundary.</p>
     <div class="actions">
       <a class="button primary" href="https://github.com/sonii-shivansh/Vericore" target="_blank" rel="noreferrer noopener">View on GitHub ↗</a>
-      <a class="button secondary" href="#proof">Explore the proof</a>
-      <a class="button tertiary" href={`${base}how-to-use/`}>See how it works</a>
+      <a class="button secondary" href={`${base}demo/`}>See the proof</a>
+      <a class="button tertiary" href={`${base}how-to-use/#prepare`}>Prepare a change safely</a>
     </div>
 
     <div class="terminal" aria-label="Example Vericore workflow output">
-      <div class="terminal-bar"><span></span><span></span><span></span><strong>vericore 0.7.0</strong></div>
-      <pre><code><span class="ok">✓</span> Repository indexed             <b>428 files</b>
-<span class="ok">✓</span> Dependency relationships        <b>1,284</b>
-<span class="ok">✓</span> Knowledge hotspots              <b>12</b>
-<span class="ok">✓</span> Engineering Reality             <b>bound</b>
+      <div class="terminal-bar"><span></span><span></span><span></span><strong>vericore 0.8.2</strong></div>
+      <pre><code><span class="accent">PREPARE</span>
+  change: add payment validation
+  contract: agent-change-contract.json
+  planned path: PaymentService.kt
 
-<span class="accent">Grounded evidence</span>
-  E17  PaymentService → PaymentRepository
-  E21  PaymentController → PaymentService
-  E34  recent fraud-flow history
+<span class="accent">AGENT CHANGES CODE</span>
+  PaymentService.kt              ✓
+  PaymentValidator.kt            ✓
+  PaymentDatabase.kt             ← unexpected
 
-<span class="accent">Safety boundary</span>
-  prepare → Agent Change Contract → change → verify</code></pre>
+<span class="accent">VERIFY</span>
+  scope check                    ✗ FAIL
+  unexpected mutation            1 file
+
+<span class="ok">The original contract stays authoritative.</span></code></pre>
     </div>
   </section>
 
@@ -53,7 +56,7 @@ const capabilities = [
     <div class="section-heading">
       <span class="kicker">01 / WHAT SHIPS</span>
       <h2>More than code analysis.</h2>
-      <p>Vericore 0.7.0 connects deterministic repository evidence to engineering decisions, architecture checks, impact analysis, and change verification.</p>
+      <p>Vericore connects deterministic repository evidence to engineering decisions, architecture checks, impact analysis, and—most importantly—the verification boundary around AI-assisted changes.</p>
     </div>
     <div class="capability-grid">
       {capabilities.map(([title, description, href]) => (
