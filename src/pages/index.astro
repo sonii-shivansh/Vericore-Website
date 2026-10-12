@@ -19,9 +19,9 @@ const capabilities = [
 ];
 ---
 
-<BaseLayout title="Vericore — AI agent verification" description="Vericore is the verification layer for AI coding agents: deterministic repository evidence, pre-change contracts, and post-change verification for Java and Kotlin repositories.">
+<BaseLayout title="VeriCore — Verify AI Coding Agent Changes" description="VeriCore is an open-source verification layer for AI coding agents. Prepare a change contract before edits, then check repository scope and evidence after the change. Built for Java and Kotlin workflows.">
   <section class="hero container">
-    <div class="eyebrow"><span class="pulse"></span> v0.8.2 · open source · local-first · AI-agent verification</div>
+    <div class="eyebrow"><span class="pulse"></span> Open source · local-first · AI coding-agent verification</div>
     <h1>AI changes code.<br /><span>Vericore verifies it.</span></h1>
     <p class="hero-copy">Vericore creates a repository-bound change contract before an AI coding agent edits code, then verifies the actual repository state against that original boundary.</p>
     <div class="actions">
@@ -47,6 +47,63 @@ const capabilities = [
   unexpected mutation            1 file
 
 <span class="ok">The original contract stays authoritative.</span></code></pre>
+    </div>
+  </section>
+
+  <section id="what-vericore-verifies" class="section container explainer">
+    <div class="section-heading">
+      <span class="kicker">WHAT IT VERIFIES</span>
+      <h2>Verify AI coding-agent changes against the plan—not a moving target.</h2>
+      <p>VeriCore is an open-source verification layer for AI-assisted software development. Before an agent edits a repository, VeriCore records a persisted Agent Change Contract that describes the intended change boundary. After the agent finishes, VeriCore checks the resulting repository against that original contract and the evidence available to it.</p>
+    </div>
+    <div class="explainer-grid">
+      <article>
+        <span class="meta">01 / Scope</span>
+        <h3>Did the change stay within the boundary?</h3>
+        <p>Check changed paths against the planned scope and surface unexpected repository mutations instead of silently treating them as part of the plan.</p>
+      </article>
+      <article>
+        <span class="meta">02 / Repository state</span>
+        <h3>Is the evidence tied to the intended repository state?</h3>
+        <p>VeriCore uses repository identity, state fingerprints, and contract integrity checks to help detect stale or altered verification context.</p>
+      </article>
+      <article>
+        <span class="meta">03 / Evidence</span>
+        <h3>What was actually verified?</h3>
+        <p>Verification results distinguish passing and failing checks from inconclusive or unevaluated criteria. The result is designed to be inspectable, not a vague “AI says it looks good.”</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="how-it-works" class="section container explainer">
+    <div class="section-heading">
+      <span class="kicker">HOW IT WORKS</span>
+      <h2>Prepare → Change → Verify</h2>
+      <p>The contract is created before implementation and remains the reference point after the code changes.</p>
+    </div>
+    <ol class="workflow-list">
+      <li><span>1</span><div><h3>Prepare the change</h3><p>Analyze the repository and save a contract describing the expected scope and verification criteria.</p></div></li>
+      <li><span>2</span><div><h3>Let your coding agent work</h3><p>Use your normal AI coding workflow. VeriCore is a verification layer; it does not need to take over the agent or autonomously rewrite your source files.</p></div></li>
+      <li><span>3</span><div><h3>Verify against the original contract</h3><p>Evaluate the changed repository against the saved boundary and available evidence, then inspect the verification result and receipt.</p></div></li>
+    </ol>
+    <p class="scope-note"><strong>Important:</strong> VeriCore does not claim to prove that code is bug-free or semantically correct. It checks declared constraints against the evidence its current evaluators can assess; unsupported criteria may remain inconclusive or unevaluated.</p>
+  </section>
+
+  <section id="who-should-use-vericore" class="section container explainer">
+    <div class="section-heading">
+      <span class="kicker">WHO IT IS FOR</span>
+      <h2>For teams that need evidence after AI writes code.</h2>
+      <p>VeriCore is especially relevant when AI coding agents are changing real repositories and developers need a clearer record of what was allowed, what changed, and what checks actually passed.</p>
+    </div>
+    <div class="audience-grid">
+      <article><h3>Developers using AI coding agents</h3><p>Catch out-of-scope file changes and review whether an agent's work matches the intended change boundary.</p></article>
+      <article><h3>Maintainers and engineering teams</h3><p>Add a repeatable, evidence-first check to code review and change workflows, particularly in Java and Kotlin repositories.</p></article>
+      <article><h3>Agent and tooling builders</h3><p>Explore CLI, local MCP, REST, and GitHub Actions integration points for repository-aware verification workflows.</p></article>
+    </div>
+    <div class="explainer-links">
+      <a class="button primary" href="https://github.com/sonii-shivansh/Vericore" target="_blank" rel="noreferrer noopener">Explore the open-source project ↗</a>
+      <a class="button secondary" href={`${base}how-to-use/#prepare`}>Read the usage guide</a>
+      <a class="button secondary" href={`${base}demo/`}>See an example</a>
     </div>
   </section>
 
@@ -160,8 +217,9 @@ const capabilities = [
 
 <style>
 .hero{padding:112px 0 40px;position:relative}.hero::before{content:'';position:absolute;inset:0 -30vw auto;height:520px;z-index:-1;background:radial-gradient(circle at 50% 30%,rgb(115 213 255 / 10%),transparent 45%)}.eyebrow{display:inline-flex;align-items:center;gap:10px;color:var(--accent);font:600 .72rem/1.2 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.12em;text-transform:uppercase}.pulse{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--success);box-shadow:0 0 0 0 rgba(110,231,183,.4);animation:pulse 2s infinite}.hero h1{margin:20px 0 18px;font-size:clamp(4rem,8vw,7rem);line-height:.9;letter-spacing:-.07em}.hero h1 span{color:#dfeaf5}.hero-copy{max-width:720px;color:var(--muted);font-size:1.08rem;line-height:1.7}.actions{display:flex;flex-wrap:wrap;gap:14px;margin-top:26px}.button{display:inline-flex;align-items:center;justify-content:center;padding:12px 18px;border-radius:10px;border:1px solid var(--line);font-weight:700;text-decoration:none;transition:transform .2s ease,border-color .2s ease}.button:hover{transform:translateY(-1px)}.button.primary{background:var(--accent);color:#071018;border-color:transparent}.button.secondary{background:transparent;color:var(--text)}.button.tertiary{background:rgba(255,255,255,.02);color:var(--text)}
+.explainer-grid,.audience-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.explainer-grid article,.audience-grid article{padding:22px;border:1px solid var(--line);border-radius:14px;background:rgba(17,24,35,.75)}.explainer-grid h3,.audience-grid h3{margin:12px 0 8px;font-size:1.15rem}.explainer-grid p,.audience-grid p{margin:0;color:var(--muted);line-height:1.7}.workflow-list{display:grid;gap:14px;list-style:none;padding:0;margin:0;max-width:900px}.workflow-list li{display:flex;gap:16px;align-items:flex-start;padding:18px;border:1px solid var(--line);border-radius:12px;background:rgba(17,24,35,.65)}.workflow-list li>span{display:grid;place-items:center;flex:0 0 34px;height:34px;border-radius:50%;background:var(--accent);color:#071018;font-weight:800}.workflow-list h3{margin:2px 0 6px}.workflow-list p{margin:0;color:var(--muted);line-height:1.7}.scope-note{max-width:900px;margin-top:18px;padding:16px 18px;border-left:3px solid var(--accent);background:rgba(115,213,255,.06);color:var(--muted);line-height:1.7}.scope-note strong{color:var(--text)}.explainer-links{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
 .terminal{margin-top:36px;width:min(100%,720px);border:1px solid var(--line);border-radius:14px;background:rgba(10,16,22,.9);box-shadow:0 24px 60px rgba(0,0,0,.2);overflow:hidden}.terminal-bar{display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid var(--line);background:rgba(255,255,255,.02);color:var(--muted);font:.72rem/1 ui-monospace,SFMono-Regular,Menlo,monospace}.terminal-bar span{display:inline-block;width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.25)}.terminal-bar strong{margin-left:10px;color:var(--text)}.terminal pre{margin:0;padding:18px 20px;color:#dfeaf5;font-size:.88rem;line-height:1.8}.ok{color:var(--success)}.accent{color:var(--accent)}
 .section{padding-top:var(--section-gap)}.section-heading{max-width:820px;margin-bottom:28px}.section-heading .kicker,.meta{color:var(--accent);font:600 .72rem/1.2 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.12em;text-transform:uppercase}.section-heading h2{margin:16px 0 12px;font-size:clamp(2.2rem,5vw,3.5rem);letter-spacing:-.05em;line-height:1.06}.section-heading p{margin:0;color:var(--muted);font-size:1.04rem;line-height:1.7}
 .capability-grid,.architecture-grid,.proof-grid,.launch-grid{display:grid;gap:18px}.capability-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.capability-card{display:block;padding:20px 18px;border:1px solid var(--line);border-radius:14px;background:linear-gradient(180deg, rgba(17,24,35,.8), rgba(12,17,25,.92));text-decoration:none;color:var(--text);transition:border-color .2s ease, transform .2s ease}.capability-card:hover{border-color:rgba(115,213,255,.6);transform:translateY(-1px)}.capability-card span{display:block;font-weight:700;margin-bottom:10px}.capability-card p{margin:0;color:var(--muted);line-height:1.6}.architecture-grid,.proof-grid,.launch-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.architecture-grid article,.proof-grid article,.launch-grid article{padding:20px;border:1px solid var(--line);border-radius:14px;background:rgba(17,24,35,.75)}.architecture-grid article h3,.proof-grid article h3,.launch-grid article h3{margin:12px 0 8px;font-size:1.2rem}.architecture-grid article p,.proof-grid article p,.launch-grid article p{margin:0;color:var(--muted);line-height:1.7}.cta{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:30px 24px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(180deg, rgba(13,18,26,.9), rgba(12,17,25,.85));margin-top:var(--section-gap)}.cta h2{margin:10px 0 8px;font-size:clamp(2rem,5vw,3rem);letter-spacing:-.05em}.cta p{margin:0;color:var(--muted);line-height:1.7}.cta-actions{display:flex;flex-wrap:wrap;gap:12px}.@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(110,231,183,.45)}70%{box-shadow:0 0 0 12px rgba(110,231,183,0)}100%{box-shadow:0 0 0 0 rgba(110,231,183,0)}}
-@media(max-width:1000px){.capability-grid,.architecture-grid,.proof-grid,.launch-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.cta{flex-direction:column;align-items:flex-start}}@media(max-width:700px){.hero{padding-top:78px}.section{padding-top:88px}.capability-grid,.architecture-grid,.proof-grid,.launch-grid{grid-template-columns:1fr}.cta-actions,.actions{flex-direction:column;align-items:stretch}.button{width:100%}.cta{padding:22px 18px}}@media(max-width:430px){h1{font-size:clamp(2.55rem,14vw,3.5rem)}.container{width:calc(100% - 24px)}.section-heading h2,.cta h2{font-size:2rem}}
+@media(max-width:1000px){.explainer-grid,.audience-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.capability-grid,.architecture-grid,.proof-grid,.launch-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.cta{flex-direction:column;align-items:flex-start}}@media(max-width:700px){.hero{padding-top:78px}.section{padding-top:88px}.explainer-grid,.audience-grid{grid-template-columns:1fr}.capability-grid,.architecture-grid,.proof-grid,.launch-grid{grid-template-columns:1fr}.cta-actions,.actions{flex-direction:column;align-items:stretch}.button{width:100%}.cta{padding:22px 18px}}@media(max-width:430px){h1{font-size:clamp(2.55rem,14vw,3.5rem)}.container{width:calc(100% - 24px)}.section-heading h2,.cta h2{font-size:2rem}}
 </style>
